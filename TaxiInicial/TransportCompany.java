@@ -11,8 +11,11 @@ import java.util.*;
  */
 public class TransportCompany  
 {
-    // TODO definir todos sus campos
     private String name;  //nombre de la compañía
+    private List<Taxi> vehicles; //coleccion de taxis de la compañia
+    private List<Passenger> passengers;  //coleccion de pasajeros 
+    //TODO implementar assignments
+    
 
     /**
      * Constructor for objects of class TransportCompany
