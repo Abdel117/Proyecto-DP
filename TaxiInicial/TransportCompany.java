@@ -1,6 +1,7 @@
 package TaxiInicial;
 
 import java.util.*;
+import java.util.HashMap;
 
 /**
  * Model the operation of a taxi company, operating different
@@ -14,8 +15,7 @@ public class TransportCompany
     private String name;  //nombre de la compañía
     private List<Taxi> vehicles; //coleccion de taxis de la compañia
     private List<Passenger> passengers;  //coleccion de pasajeros 
-    //TODO implementar assignments
-    private List<Passenger> assignments; //coleccion de asignaciones
+    private Map<String, Passenger> assignments; //coleccion de asignaciones
     
 
     /**
@@ -24,9 +24,9 @@ public class TransportCompany
     public TransportCompany(String name)
     {
         this.name = name;
-        this.vehicles = null; 
-        this.passengers = null; 
-        this.assignments = null; 
+        this.vehicles = new LinkedList<>(); 
+        this.passengers =  new LinkedList<>(); 
+        this.assignments = new HashMap<>(); 
 
     }
 
@@ -93,19 +93,24 @@ public class TransportCompany
      */
     private Taxi scheduleVehicle(Location location)
     {
-        List <Taxi> auxVehicles = null; 
+        List <Taxi> auxVehicles = new LinkedList<>(); 
         boolean found; 
         for(int i = 0; i < vehicles.size(); i++){
             if(vehicles.get(i).isFree()){
-                for(int j = 0; j < auxVehicles.size() ; j++){
-                    if(auxVehicles.get(j).distanceToTheTargetLocation() < vehicles.get(i).distanceToTheTargetLocation()){
+                found = false;
+                vehicles.get(i).setTargetLocation(location);
+                for(int j = 0; j < auxVehicles.size() && !found ; j++){
+                    if(auxVehicles == null || 
+                        auxVehicles.get(j).distanceToTheTargetLocation() >
+                        vehicles.get(i).distanceToTheTargetLocation()){
                         found = true; 
+                        auxVehicles.add(j,vehicles.get(i));
                     }
                     
                 }
             }
         }
-        return auxVehicles.get(1);
+        return auxVehicles.get(0);
     }
 
     /**
@@ -116,9 +121,11 @@ public class TransportCompany
     public boolean requestPickup(Passenger passenger)
     {
         boolean found = false; 
-        for(int i = 0; i < vehicles.size() && !found; i++){
-            if(vehicles.get(i).isFree())
-                found = true;
+        Taxi taxi = shceduleVehicle(passenger.getLocation()); 
+        if(taxi != null){
+            taxi.setPickupLocation(passenger.getLocation());
+            assignments.put(taxi.getName(), passenger); 
+            found = true; 
         }
         return found;
     }
@@ -130,10 +137,13 @@ public class TransportCompany
     public void arrivedAtPickup(Taxi taxi)
     {
         //TODO Obtener el pasajero asignado al taxi y eliminar la asignación correspondiente taxi/pasajero
-        //TODO Descomentar siguiente línea cuando esté el método completamente implementado
-        //System.out.println("<<<< "+taxi + " picks up " + passenger.getName());
+        Passenger passenger = assignments.get(taxi.getName()); 
+        assignments.remove(taxi.getName());
+        System.out.println("<<<< "+taxi + " picks up " + passenger.getName());
         //TODO el pasajero debe guardar el nombre del taxi que le ha recogido
+        passenger.setTaxiName(taxi.getName());
         //TODO el taxi debe recoger al pasajero
+        taxi.pickup(passenger);
     }
 
 }
