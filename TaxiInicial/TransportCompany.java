@@ -15,6 +15,7 @@ public class TransportCompany
     private List<Taxi> vehicles; //coleccion de taxis de la compañia
     private List<Passenger> passengers;  //coleccion de pasajeros 
     //TODO implementar assignments
+    private List<Passenger> assignments; //coleccion de asignaciones
     
 
     /**
@@ -23,7 +24,9 @@ public class TransportCompany
     public TransportCompany(String name)
     {
         this.name = name;
-        //TODO implementar el resto del constructor 
+        this.vehicles = null; 
+        this.passengers = null; 
+        this.assignments = null; 
 
     }
 
@@ -51,9 +54,7 @@ public class TransportCompany
      */
     public List<Taxi> getVehicles()
     {       
-        //TODO implementar el método 
-
-        return null;
+        return vehicles;
     }
 
     /**
@@ -61,17 +62,16 @@ public class TransportCompany
      */
     public List<Passenger> getPassengers()
     {
-        //TODO implementar el método 
-
-        return null;
+        return passengers;
     }
 
     /**
-     * @param Add the new Vehicle.
+     * Add the new Vehicle.
+     * @param vehicle The new vehicle; 
      */
     public void addVehicle(Taxi vehicle)
     {
-        //TODO implementar el método 
+        vehicles.add(vehicle);
     }
 
     /**
@@ -80,8 +80,10 @@ public class TransportCompany
      */
     public void addPassenger(Passenger passenger)
     {
-        //TODO implementar el método 
-
+        int position = 0; 
+        while(passenger.getName().compareTo(passengers.get(position).getName()) < 0)
+            position++;
+        passengers.add(position, passenger);
     }
 
     /**
@@ -91,9 +93,19 @@ public class TransportCompany
      */
     private Taxi scheduleVehicle(Location location)
     {
-        //TODO implementar el método 
-
-        return null;
+        List <Taxi> auxVehicles = null; 
+        boolean found; 
+        for(int i = 0; i < vehicles.size(); i++){
+            if(vehicles.get(i).isFree()){
+                for(int j = 0; j < auxVehicles.size() ; j++){
+                    if(auxVehicles.get(j).distanceToTheTargetLocation() < vehicles.get(i).distanceToTheTargetLocation()){
+                        found = true; 
+                    }
+                    
+                }
+            }
+        }
+        return auxVehicles.get(1);
     }
 
     /**
@@ -103,8 +115,12 @@ public class TransportCompany
      */
     public boolean requestPickup(Passenger passenger)
     {
-        //TODO implementar el método 
-        return true;
+        boolean found = false; 
+        for(int i = 0; i < vehicles.size() && !found; i++){
+            if(vehicles.get(i).isFree())
+                found = true;
+        }
+        return found;
     }
 
     /**
