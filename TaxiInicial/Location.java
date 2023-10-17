@@ -1,3 +1,5 @@
+package TaxiInicial;
+
 /**
  * Model a location in a city.
  * 

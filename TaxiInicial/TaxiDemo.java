@@ -1,3 +1,5 @@
+package TaxiInicial;
+
 /**
  * Provide a simple demonstration of running a stage-one
  * scenario. Three simulaions are create: 

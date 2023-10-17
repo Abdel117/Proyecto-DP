@@ -1,3 +1,5 @@
+package TaxiInicial;
+
 /**
  * Model the common elements of taxis and shuttles.
  * 
