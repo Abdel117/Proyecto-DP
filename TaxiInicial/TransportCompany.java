@@ -80,10 +80,7 @@ public class TransportCompany
      */
     public void addPassenger(Passenger passenger)
     {
-        int position = 0; 
-        while(passenger.getName().compareTo(passengers.get(position).getName()) < 0)
-            position++;
-        passengers.add(position, passenger);
+        passengers.add(passenger);
     }
 
     /**
@@ -130,7 +127,7 @@ public class TransportCompany
     }
 
     /**
-     * A vehicle has arrived at a pickup point.
+     * A taxi has arrived at a pickup point.
      * @param taxi The taxi at the pickup point.
      */
     public void arrivedAtPickup(Taxi taxi)
@@ -149,6 +146,11 @@ public class TransportCompany
      * @param location2 The destination location. 
      */
     public void arrivedAtDestination(Taxi taxi, Passenger passenger, Location location1, Location location2){
-        System.out.println(taxi +" at " + location2 + " offloads Passenger " + passenger + " travelling from " + location1 + " to " + location2);
+        System.out.println("Taxi " +  taxi +" at " + location2 + " offloads Passenger " + passenger + " travelling from " + location1 + " to " + location2);
     }
+    
+    @Override
+    public String toString(){
+        return name;
+    }  
 }
