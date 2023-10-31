@@ -15,7 +15,7 @@ public class TransportCompany
     private String name;  //nombre de la compañía
     private List<Taxi> vehicles; //coleccion de taxis de la compañia
     private List<Passenger> passengers;  //coleccion de pasajeros 
-    private Map<String, Passenger> assignments; //coleccion de asignaciones
+    private Assignments assignments; //coleccion de asignaciones
     
 
     /**
@@ -26,7 +26,7 @@ public class TransportCompany
         this.name = name;
         this.vehicles = new LinkedList<>(); 
         this.passengers =  new LinkedList<>(); 
-        this.assignments = new HashMap<>(); 
+        this.assignments = new Assignments(); 
 
     }
 
@@ -95,22 +95,21 @@ public class TransportCompany
     {
         List <Taxi> auxVehicles = new LinkedList<>(); 
         boolean found; 
-        for(int i = 0; i < vehicles.size(); i++){
-            if(vehicles.get(i).isFree()){
+        for(int i = 0; i < vehicles.size(); i++){ //Recorre la lista de vehiculos
+            if(vehicles.get(i).isFree()){ //Si el vehiculo esta libre
                 found = false;
-                vehicles.get(i).setTargetLocation(location);
-                for(int j = 0; j < auxVehicles.size() && !found ; j++){
+                vehicles.get(i).setTargetLocation(location); //Añadimos la localizacion a su destino
+                for(int j = 0; j < auxVehicles.size() && !found ; j++){ //Recorremos la lista auxiliar
                     if(auxVehicles == null || 
                         auxVehicles.get(j).distanceToTheTargetLocation() >
                         vehicles.get(i).distanceToTheTargetLocation()){
                         found = true; 
-                        auxVehicles.add(j,vehicles.get(i));
+                        auxVehicles.add(j,vehicles.get(i)); //Añade el vehiculo a la lista en la posicion correspondiente
                     }
-                    
                 }
             }
         }
-        return auxVehicles.get(0);
+        return auxVehicles.get(0); //Devolvemos el primer elemento de la lista
     }
 
     /**
@@ -121,10 +120,10 @@ public class TransportCompany
     public boolean requestPickup(Passenger passenger)
     {
         boolean found = false; 
-        Taxi taxi = shceduleVehicle(passenger.getLocation()); 
+        Taxi taxi = shceduleVehicle(passenger.getLocation()); //Llamamos a la funcion que devuelve el taxi mas cercano
         if(taxi != null){
-            taxi.setPickupLocation(passenger.getLocation());
-            assignments.put(taxi.getName(), passenger); 
+            taxi.setPickupLocation(passenger.getLocation()); //Establecemos el punto de recogida
+            assignments.addAssignment(taxi, passenger); //Añadimos el taxi al HashMap de assignments
             found = true; 
         }
         return found;
@@ -137,8 +136,8 @@ public class TransportCompany
     public void arrivedAtPickup(Taxi taxi)
     {
         //TODO Obtener el pasajero asignado al taxi y eliminar la asignación correspondiente taxi/pasajero
-        Passenger passenger = assignments.get(taxi.getName()); 
-        assignments.remove(taxi.getName());
+        Passenger passenger = assignments.getPassenger(taxi); 
+        assignments.deleteAssingment(taxi);
         System.out.println("<<<< "+taxi + " picks up " + passenger.getName());
         //TODO el pasajero debe guardar el nombre del taxi que le ha recogido
         passenger.setTaxiName(taxi.getName());
