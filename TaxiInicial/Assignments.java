@@ -1,14 +1,13 @@
 package TaxiInicial;
 import java.util.HashMap;
 /**
- * Write a description of class Assignments here.
+ * Interface to handle the assignments of pairs Taxi-Passenger. 
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Abdel Wahed Mahfuod Mouhandizi
+ * @version 0.0.1
  */
 public class Assignments
 {
-    // instance variables - replace the example below with your own
     private HashMap<Taxi, Passenger> assignments; 
 
     /**
@@ -20,20 +19,26 @@ public class Assignments
     }
 
     /**
-     * An example of a method - replace this comment with your own
-     * 
+     * Adds a pair taxi - passenger to the object.
      * @param  taxi The key for the pair Taxi-Passenger
-     * @return     the sum of x and y 
      */
     public void addAssignment(Taxi taxi, Passenger passenger)
     {
         assignments.put(taxi, passenger); 
     }
     
+    /**
+     * Deletes a pair taxi - passenger from the object data structure. 
+     * @param  taxi The key for the pair Taxi-Passenger
+     */
     public void deleteAssingment(Taxi taxi){
         assignments.remove(taxi);
     }
-    
+    /**
+     * Finds and returns a passenger.
+     * @param  taxi The key for the pair Taxi-Passenger.
+     * @return      The passenger from the data structure of the object. 
+     */
     public Passenger getPassenger(Taxi taxi){
         return assignments.get(taxi); 
     }
