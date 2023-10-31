@@ -13,6 +13,7 @@ public class Passenger
     private String name;
     private Location pickup;
     private Location destination;
+    private Taxi nombreTaxi;
     //incluir campo para el nombre del taxi que lo ha transportado
 
     /**
@@ -35,6 +36,7 @@ public class Passenger
         this.destination = destination;
         this.name = name;
         //incluir inicialización del campo para el nombre del taxi que lo ha transportado
+        this.nombreTaxi = nombreTaxi;
     }
 
     /**
@@ -45,6 +47,7 @@ public class Passenger
         return name;
     }
 
+    //TODO Debe poder devolver la localización donde hay que llevar al Passenger.
     /**
      * @return The destination location.
      */
@@ -59,19 +62,27 @@ public class Passenger
      */
     public String toString()
     {
-        return "Passenger "+getName()+" travelling from " +
-        pickup + " to " + destination;
+        return getName()+" con destino a " + destination + " en el taxi " + nombreTaxi;
     }
     
-    
-    
     //TODO Debe poder devolver la posición donde hay que recoger al Passenger.
-
-    //TODO Debe poder devolver la localización donde hay que llevar al Passenger.
+    public Location posicion(){
+        return pickup;
+    }
 
     //TODO Debe poder modificarse el nombre del taxi usado.
+    public void setNombreTaxi(Taxi taxiUsado) {
+    this.nombreTaxi = taxiUsado;
+    }
     
     //TODO Debe poder devolver el nombre del taxi usado..
+    /**
+     * @return The name of taxi.
+     */
+    public Taxi getNombreTaxi()
+    {
+        return nombreTaxi;
+    }
     
     
     /**
@@ -80,7 +91,8 @@ public class Passenger
     public String showFinalInfo()
     {
         // TO DO
-        return "";
+        return "Pasajero "+ name +" viaja de " +
+               pickup + " hacia " + destination + " en el taxi " + nombreTaxi;
     }
 
 }

@@ -60,7 +60,17 @@ public class Location
         //TODO ahora mismo este método devuelve directamente el destino final
         //PERO DEBERIA ir calculando y devolviendo la siguiente posición por la que 
         // va pasando el taxi hasta llegar al destino
-        return destination;
+        
+        int destinoX = destination.getX(); //Obtenemos el destino de x e y
+        int destinoY = destination.getY();
+        int offsetX = x < destinoX ? 1 : x > destinoX ? -1 : 0;
+        int offsetY = y < destinoY ? 1 : y > destinoY ? -1 : 0;
+        if(offsetX != 0 || offsetY != 0) {
+            return new Location(x + offsetX, y + offsetY); //Retorna posicion por posicion hasta que llega al destino
+        }
+        else {
+            return destination;
+        }
     }
 
     /**
@@ -72,7 +82,10 @@ public class Location
     public int distance(Location destination)
     {
         //TODO implementar este método que devuelve el número total de pasos para alcanzar el destino
-        return 1;
+        //Math abs, nos permite calcular el valor absoluto de un número determinado.
+        int xDistancia = Math.abs(destination.getX() - x);
+        int yDistancia = Math.abs(destination.getY() - y);
+        return Math.max(xDistancia, yDistancia); //Devuelve el valor del máximo de dos valores
     }
 
     /**
