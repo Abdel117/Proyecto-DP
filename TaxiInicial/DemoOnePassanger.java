@@ -145,10 +145,16 @@ public class DemoOnePassanger
         System.out.println("");
 
         System.out.println("-->> Taxis final information <<--");
-        //TODO ordenar y mostrar los taxis
+        actors.sort(); 
+        for(Taxi actor: actors){
+            actor.showFinalInfo();
+        }
 
         System.out.println("-->> Passengers final information <<--");
         //TODO ordenar y mostrar los pasajero/as
+        for(Passenger passenger: company.getPassengers()){
+            System.out.println(passenger);
+        }
 
     }
 }
