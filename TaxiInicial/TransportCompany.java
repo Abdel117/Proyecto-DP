@@ -39,14 +39,12 @@ public class TransportCompany
     }
 
     /**
-     * A vehicle has arrived at a passenger's destination.
-     * @param vehicle The vehicle at the destination.
-     * @param passenger The passenger being dropped off.
+     * A taxi has arrived at a destination point and offloads the passenger.
+     * @param taxi The taxi at the destination point.
+     * @param passenger The passenger offloaded.
      */
-    public void arrivedAtDestination(Taxi vehicle,
-    Passenger passenger)
-    {
-        System.out.println(vehicle + " offloads " + passenger);
+    public void arrivedAtDestination(Taxi taxi, Passenger passenger){
+        System.out.println("Taxi " +  taxi +" at " + taxi.getLocation() + " offloads Passenger " + passenger + " travelling from " + passenger.getPickup() + " to " + passenger.getDestination());
     }
 
     /**
@@ -134,19 +132,14 @@ public class TransportCompany
     {
         Passenger passenger = assignments.getPassenger(taxi); 
         assignments.deleteAssingment(taxi);
-        System.out.println("<<<< "+taxi + " picks up " + passenger.getName());
+        System.out.println("<<<< Taxi "+ taxi + " at location " + taxi.getLocation() + " picks up " + passenger.getName());
         passenger.setTaxiName(taxi.getName());
         taxi.pickup(passenger);
     }
-    /**
-     * A taxi has arrived at a destination point and offloads the passenger.
-     * @param taxi The taxi at the destination point.
-     * @param passenger The passenger offloaded.
-     * @param location1 The pickup location.
-     * @param location2 The destination location. 
-     */
-    public void arrivedAtDestination(Taxi taxi, Passenger passenger, Location location1, Location location2){
-        System.out.println("Taxi " +  taxi +" at " + location2 + " offloads Passenger " + passenger + " travelling from " + location1 + " to " + location2);
+    
+    
+    public boolean areThereAssignments(){
+        return assignments.isEmpty();
     }
     
     @Override

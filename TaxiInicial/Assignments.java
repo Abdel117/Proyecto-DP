@@ -43,5 +43,14 @@ public class Assignments
         return assignments.get(taxi); 
     }
     
+    /**
+     * Number of assignments.
+     */
+    public int getTotal(){
+        return assignments.size(); 
+    }
     
+    public boolean isEmpty(){
+        return assignments.size() == 0; 
+    }
 }

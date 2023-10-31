@@ -124,7 +124,13 @@ public class DemoOnePassanger
         }
         System.out.println("-->> Simulation start <<--");
         System.out.println("-->> ---------------- <<--");
-        System.out.println("");        
+        while(company.areThereAssignments()){
+            for(Taxi vehicle : company.getVehicles()){
+                vehicle.act();
+            }
+        }
+        
+        showFinalInfo();
     }
 
     /**
