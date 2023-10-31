@@ -131,18 +131,24 @@ public class TransportCompany
 
     /**
      * A vehicle has arrived at a pickup point.
-     * @param vehicle The vehicle at the pickup point.
+     * @param taxi The taxi at the pickup point.
      */
     public void arrivedAtPickup(Taxi taxi)
     {
-        //TODO Obtener el pasajero asignado al taxi y eliminar la asignación correspondiente taxi/pasajero
         Passenger passenger = assignments.getPassenger(taxi); 
         assignments.deleteAssingment(taxi);
         System.out.println("<<<< "+taxi + " picks up " + passenger.getName());
-        //TODO el pasajero debe guardar el nombre del taxi que le ha recogido
         passenger.setTaxiName(taxi.getName());
-        //TODO el taxi debe recoger al pasajero
         taxi.pickup(passenger);
     }
-
+    /**
+     * A taxi has arrived at a destination point and offloads the passenger.
+     * @param taxi The taxi at the destination point.
+     * @param passenger The passenger offloaded.
+     * @param location1 The pickup location.
+     * @param location2 The destination location. 
+     */
+    public void arrivedAtDestination(Taxi taxi, Passenger passenger, Location location1, Location location2){
+        System.out.println(taxi +" at " + location2 + " offloads Passenger " + passenger + " travelling from " + location1 + " to " + location2);
+    }
 }
