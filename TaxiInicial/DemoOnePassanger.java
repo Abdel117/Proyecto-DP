@@ -8,9 +8,8 @@ import java.util.*;
  * requested. As the simulation is run, the passenger
  * should be picked up and then taken to their destination.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023 DP Classes
+ * @author Los chavales
+ * @version 2023.11.02
  */
 public class DemoOnePassanger
 {
@@ -99,43 +98,38 @@ public class DemoOnePassanger
 
     }
 
-    /**
-     * Initial info is showed with the information about taxis and passengers
-     */
     private void showInicialInfo() {
 
-        System.out.println("--->> Simulation of the company: "+ company +" <<---");
+        System.out.println("--->> Simulation of the company: "+company+" <<---");
         System.out.println("-->> Taxis of the company <<--");
 
-        //Ordenar y mostrar los taxis
-        actors.sort();
-        for (Taxi actor : actors){
-            System.out.println("Taxi " + actor + " at location " + actor.getLocation()); 
-        }
-        //Ordenar y mostrar los pasajero/as        
-        //para ordenar una colección aplicando un comparador, esta sería 
-        //la sintaxis (suponiendo que "passengers" es una colección donde
-        //la compañía de taxis almacena los pasajero/as):
-        Collection.sort(company.getPassengers(), new ComparadorNombrePassenger());
+        //ordenar y mostrar los taxis
+        Collections.sort(actors, new ComparatorNameTaxi());
+        Iterator<Taxi> iterator = actors.iterator();
+        while (iterator.hasNext()) {
+            Taxi actor = iterator.next();
+            System.out.println("Taxi " + actor + " at location " + actor.getLocation());
+        }   
+            
+        //ordenar y mostrar los pasajero/as
+        Collections.sort(company.getPassengers(),new ComparatorNamePassenger());
+       
         System.out.println("-->> Passengers requesting taxi <<--");
         System.out.println("-->> ---------------- <<--");
+        
         for (Passenger passenger : company.getPassengers()){
-            System.out.println("Passenger " + passenger + " travelling from location " + passenger.getLocation() +  " to location " + passenger.getDestination());
+            System.out.println("Passenger " + passenger + " travelling from location " + passenger.getPosition() + " to location " + passenger.getDestination() );
         }
+
         System.out.println("-->> Simulation start <<--");
         System.out.println("-->> ---------------- <<--");
-        while(company.areThereAssignments()){
-            for(Taxi vehicle : company.getVehicles()){
-                vehicle.act();
-            }
-        }
-        
-        showFinalInfo();
+            
     }
-
+    
     /**
      * Final info is showed with the information about taxis and passengers
      */
+
     private void showFinalInfo() {
 
         System.out.println("");
@@ -145,16 +139,19 @@ public class DemoOnePassanger
         System.out.println("");
 
         System.out.println("-->> Taxis final information <<--");
-        actors.sort(); 
+        // ordenar y mostrar los taxis
+        Collections.sort(actors,new ComparatorNameTaxi());
+        
         for(Taxi actor: actors){
-            actor.showFinalInfo();
+             actor.showFinalInfo();
         }
 
         System.out.println("-->> Passengers final information <<--");
-        //TODO ordenar y mostrar los pasajero/as
-        for(Passenger passenger: company.getPassengers()){
-            System.out.println(passenger);
+        //ordenar y mostrar los pasajero/as
+        Iterator<Passenger> iterator = company.getPassengers().iterator();
+        while (iterator.hasNext()) {
+            Passenger passenger = iterator.next();
+            passenger.showFinalInfo();
         }
-
     }
 }

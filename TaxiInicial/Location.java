@@ -1,16 +1,17 @@
 package TaxiInicial;
 
+import java.util.Comparator;
+
 /**
  * Model a location in a city.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023.10.10 DP classes 
+ * @author Los chavales
+ * @version 2023.11.02 
  */
 public class Location
 {
-    public int x;  //TODO cambiar a private
-    public int y;  //TODO cambiar a private
+    public int x; 
+    public int y;  
 
     /**
      * Model a location in the city.
@@ -57,14 +58,24 @@ public class Location
      */
     public Location nextLocation(Location destination)
     {
-        //TODO ahora mismo este método devuelve directamente el destino final
-        //PERO DEBERIA ir calculando y devolviendo la siguiente posición por la que 
-        // va pasando el taxi hasta llegar al destino
-        
+      
         int destinoX = destination.getX(); //Obtenemos el destino de x e y
         int destinoY = destination.getY();
-        int offsetX = x < destinoX ? 1 : x > destinoX ? -1 : 0;
-        int offsetY = y < destinoY ? 1 : y > destinoY ? -1 : 0;
+        int offsetX = 0;
+        int offsetY = 0;
+        
+        if(x < destinoX) {
+            offsetX = 1;
+        } else if (x > destinoX) {
+            offsetX = -1;
+        }
+        
+        if(y < destinoY) {
+            offsetY = 1;
+        } else if (y > destinoY) {
+            offsetY = -1;
+        }
+        
         if(offsetX != 0 || offsetY != 0) {
             return new Location(x + offsetX, y + offsetY); //Retorna posicion por posicion hasta que llega al destino
         }
@@ -81,11 +92,27 @@ public class Location
      */
     public int distance(Location destination)
     {
-        //TODO implementar este método que devuelve el número total de pasos para alcanzar el destino
-        //Math abs, nos permite calcular el valor absoluto de un número determinado.
+   
         int xDistancia = Math.abs(destination.getX() - x);
         int yDistancia = Math.abs(destination.getY() - y);
-        return Math.max(xDistancia, yDistancia); //Devuelve el valor del máximo de dos valores
+        return xDistancia + yDistancia; //Devuelve la suma de los dos valores
+    }
+    
+    /**
+     * Change the x cordinate location
+     * @param x The coordinate x location
+     * 
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    /**
+     * Change the Y cordinate location
+     * @param y The coordinate Y location
+     */
+    public void setY(int y) {
+        this.y = y;
     }
 
     /**
@@ -109,7 +136,7 @@ public class Location
      */
     public String toString()
     {
-        return "location " + x + "," + y;
+        return x + "," + y;
     }
 
     /**

@@ -43,6 +43,9 @@ public class Assignments
         return assignments.get(taxi); 
     }
     
+    public boolean contains(Taxi taxi){
+        return assignments.containsKey(taxi);
+    }
     /**
      * Number of assignments.
      */

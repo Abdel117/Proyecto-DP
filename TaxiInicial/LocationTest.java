@@ -8,9 +8,8 @@ import org.junit.Test;
 /**
  * Test implementation of the Location class.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023.10.10 DP classes 
+ * @author Los chavales
+ * @version 2023.11.02
  */
 public class LocationTest
 {

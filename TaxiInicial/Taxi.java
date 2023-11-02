@@ -3,23 +3,16 @@ package TaxiInicial;
 /**
  * Model the common elements of taxis and shuttles.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023.10.10 DP classes 
+ * @author Los chavales
+ * @version 2023.11.02
  */
-public class Taxi 
+public class Taxi
 {
-    // The Taxi Company of this Taxi.
-    private TransportCompany company;   //TODO cambiar a private
-    // Where the vehicle is.
-    private Location location;     //TODO cambiar a private
-    // Where the vehicle is headed.
-    private  Location targetLocation;   //TODO cambiar a private
-    // Record how often the vehicle has nothing to do.
-    private int idleCount;       //TODO cambiar a private
-    //name of the taxi
-    private String name; //TODO cambiar a private
-    //TODO añadir campos necesarios
+    private TransportCompany company; 
+    private Location location; 
+    private  Location targetLocation;
+    private int idleCount;
+    private String name;
     private Passenger passenger;
     private int passengersTransported;
 
@@ -48,7 +41,47 @@ public class Taxi
         this.name = name;
         this.passenger = passenger;
         this.passengersTransported = passengersTransported;
-        //TODO resto de inicializaciones pendientes
+    }
+
+    public Taxi(TransportCompany company, Location location, String name) {
+        super();
+        this.company = company;
+        this.location = location;
+        this.name = name;
+    }
+    
+    /**
+     * @return the TransportCompany of the taxi
+     */
+    public TransportCompany getCompany()
+    {
+        return company;
+    }
+    
+    /**
+    * Sets the current company
+    * @param company Where it is.
+    */
+    public void setCompany(TransportCompany company)
+    {
+        this.company = company;
+    }
+    
+    /**
+     * @return the passengersTransported by the taxi
+     */
+    public int getPassengersTransported()
+    {
+        return passengersTransported;
+    }
+    
+    /**
+    * Sets the passengersTransported
+    * @param passengersTransported Where it is.
+    */
+    public void setPassengersTransported(int passengersTransported)
+    {
+        this.passengersTransported = passengersTransported;
     }
 
     /**
@@ -57,6 +90,15 @@ public class Taxi
     public String getName()
     {
         return name;
+    }
+    
+    /**
+    * Sets the current Name
+    * @param name The new name.
+    */
+    public void setName(String name)
+    {
+        this.name = name;
     }
 
     /**
@@ -108,15 +150,6 @@ public class Taxi
         }
     }
 
-     /**
-     * Receive a pickup location. This becomes the
-     * target location.
-     * @param location The pickup location.
-     */
-    public void setPickupLocation(Location location)
-    {
-        setTargetLocation(location);
-    }
     
     /**
      * Has the vehicle a target Location?
@@ -141,6 +174,15 @@ public class Taxi
     {
         return idleCount;
     }
+    
+    /**
+    * Set the IdleCount.
+    * @param idleCount, a counter of passangers.
+    */
+    public void setIdleCount(int idleCount)
+    {
+        this.idleCount = idleCount;
+    }
 
     /**
      * Increment the number of steps on which this vehicle
@@ -155,9 +197,9 @@ public class Taxi
      * Return details of the taxi, such as where it is.
      * @return A string representation of the taxi.
      */
-    public String toString()
-    {
-        return getClass().getName() + " " +getName()+" at " + getLocation();
+    @Override
+    public String toString(){
+        return name;
     }
 
     /**
@@ -166,8 +208,7 @@ public class Taxi
      */
     public boolean isFree()
     {
-        //TODO  implementar este método
-        return getTargetLocation() == null && passenger == null;
+        return targetLocation == null && passenger == null;
     }
 
     /**
@@ -175,7 +216,6 @@ public class Taxi
      */
     public void notifyPickupArrival()
     {
-        //TODO  implementar este método
         company.arrivedAtPickup(this);
     }
 
@@ -184,7 +224,6 @@ public class Taxi
      */
     public void notifyPassengerArrival(Passenger passenger)
     {
-        //TODO  implementar este método
         company.arrivedAtDestination(this, passenger);
     }
 
@@ -195,29 +234,22 @@ public class Taxi
      */
     public void pickup(Passenger passenger)
     {
-        //TODO  implementar este método
         this.passenger = passenger;
-        setTargetLocation(passenger.getDestination());
+        passengersTransported++;
     }
 
     /**
      * Offload the passenger.
      */
-    public void offloadPassenger()
-    {
-        //TODO  implementar este método
+    public void offloadPassenger(){
         passenger = null;
-        clearTargetLocation();
     }
-    
-    
 
     /**
      * @return how many passengers this vehicle has transported.
      */
     public int passengersTransported()
     {
-        //TODO  implementar este método
         return passengersTransported;
     }
     
@@ -226,7 +258,6 @@ public class Taxi
      */
     protected void incrementPassengersTransported()
     {
-        //TODO  implementar este método
         passengersTransported ++;
     }
 
@@ -236,8 +267,7 @@ public class Taxi
      */
     public int distanceToTheTargetLocation()
     {
-        //TODO  implementar este método
-        return location.distance(targetLocation);
+        return location.distance(this.targetLocation);
 
     }
 
@@ -246,37 +276,48 @@ public class Taxi
      */
     public void act()
     {
-        //TODO  implementar este método
-         Location target = getTargetLocation();
+        Location target = getTargetLocation();
         if(target != null) {
-            // Find where to move to next.
             Location next = getLocation().nextLocation(target);
             setLocation(next);
+            System.out.println("@@@ Taxi: " + name + " moving to " + location);
             if(next.equals(target)) {
                 if(passenger != null) {
                     notifyPassengerArrival(passenger);
-                    offloadPassenger();
                 }
                 else {
                     notifyPickupArrival();
                 }
-            }
+            } 
         }
         else {
             incrementIdleCount();
         }
-    
     }
     
-     /**
+    /**
+     * Get the passanger
+     * @return passanger
+     */
+     public Passenger getPassenger() {
+        return passenger;
+    }
+
+    /**
+    * Set the current passangeers
+    * @return passanger
+    */
+    public void setPassenger(Passenger passenger) {
+        this.passenger = passenger;
+    }
+    
+
+    /**
      * Return details of the taxi, such as where it is.
      * @return A string representation of the taxi.
      */
-    public String showFinalInfo()
+    public void showFinalInfo()
     {
-        //TODO  implementar este método
-        return  name + " Posicion: " + location + " Nº de pasajeros: " + passengersTransported + " Nº de pasos: " + idleCount;
-
+        System.out.println("Taxi " + name + " at location " + location + " - passengers transported: " + passengersTransported + " - non active for: " + idleCount);
     }
-
 }

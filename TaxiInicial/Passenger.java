@@ -4,28 +4,27 @@ package TaxiInicial;
  * Model a passenger wishing to get from one
  * location to another.
  * 
- * @author David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023.10.10 DP classes 
+ * @author Los chavales
+ * @version 2023.10.02  
  */
 public class Passenger
 {
     private String name;
     private Location pickup;
     private Location destination;
-    private Taxi nombreTaxi;
-    //incluir campo para el nombre del taxi que lo ha transportado
-
+    private String nameTaxi;
+  
     /**
      * Constructor for objects of class Passenger
      * @param pickup The pickup location, must not be null.
      * @param destination The destination location, must not be null.
      * @param name The passenger's name
+     * @param nameTaxi The taxi´s name
      * @throws NullPointerException If either location is null.
      */
-    public Passenger(Location pickup, Location destination, String name)
+    public Passenger(Location pickup, Location destination,String name, String nameTaxi)
     {
-        //TODO modificar el constructor o crear otro constructor si necesario
+    
         if(pickup == null) {
             throw new NullPointerException("Pickup location");
         }
@@ -35,8 +34,27 @@ public class Passenger
         this.pickup = pickup;
         this.destination = destination;
         this.name = name;
-        //incluir inicialización del campo para el nombre del taxi que lo ha transportado
-        this.nombreTaxi = nombreTaxi;
+        this.nameTaxi = nameTaxi;
+    }
+    
+    /**
+     * 
+     * @param pickup The pickup location, must not be null.
+     * @param destination The destination location, must not be null.
+     * @param name The passenger's name
+     * @throws NullPointerException If either location is null. 
+     */
+
+    public Passenger(Location pickup, Location destination, String name) {
+         if(pickup == null) {
+             throw new NullPointerException("Pickup location");
+         }
+         if(destination == null) {
+             throw new NullPointerException("Destination location");
+         }
+         this.pickup = pickup;
+         this.destination = destination;
+         this.name = name;
     }
 
     /**
@@ -47,7 +65,6 @@ public class Passenger
         return name;
     }
 
-    //TODO Debe poder devolver la localización donde hay que llevar al Passenger.
     /**
      * @return The destination location.
      */
@@ -62,37 +79,81 @@ public class Passenger
      */
     public String toString()
     {
-        return getName()+" con destino a " + destination + " en el taxi " + nombreTaxi;
+        return name;
     }
     
-    //TODO Debe poder devolver la posición donde hay que recoger al Passenger.
-    public Location posicion(){
+    /**
+     * @return The current location.
+     */
+    
+    public Location getPosition(){
         return pickup;
     }
-
-    //TODO Debe poder modificarse el nombre del taxi usado.
-    public void setNombreTaxi(Taxi taxiUsado) {
-    this.nombreTaxi = taxiUsado;
-    }
-    
-    //TODO Debe poder devolver el nombre del taxi usado..
-    /**
-     * @return The name of taxi.
-     */
-    public Taxi getNombreTaxi()
-    {
-        return nombreTaxi;
-    }
-    
     
     /**
      * Show the final information about the passenger, including the name of the taxi that used.
      */
-    public String showFinalInfo()
+    public void showFinalInfo()
     {
-        // TO DO
-        return "Pasajero "+ name +" viaja de " +
-               pickup + " hacia " + destination + " en el taxi " + nombreTaxi;
+        System.out.println("Passenger "+ name +" in location " + pickup + " moving to " + destination + " transported by " + nameTaxi);
     }
 
+    /**
+     * @return The taxi name.
+     */
+    
+    public String getNameTaxi() {
+        return nameTaxi;
+    }
+    
+    /**
+     * 
+     * @return The pickup location
+     */
+    public Location getPickup() {
+        return pickup;
+    }
+    
+    /**
+     * 
+     * @param pickup The pickup location
+     * Change the pickup location
+     */
+    public void setPickup(Location pickup) {
+        this.pickup = pickup;
+    }
+    
+    /**
+     * 
+     * @param name The passenger name
+     * Change the passenger name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    /**
+     * 
+     * @param destination The destination location
+     * Change the destination location
+     */
+    public void setDestination(Location destination) {
+        this.destination = destination;
+    }
+    
+    /**
+     * 
+     * @param nameTaxi The taxi name
+     * Change the taxi name
+     */
+    public void setNameTaxi(String nameTaxi) {
+        this.nameTaxi = nameTaxi;
+    }
+    
+    /**
+     * Change the taxi to null, offload the taxi
+     */
+    public void arrives(){
+        nameTaxi = null;
+    }
 }

@@ -1,6 +1,5 @@
 package TaxiInicial;
 
-import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,9 +7,8 @@ import org.junit.Test;
 /**
  * The test class PassengerTest.
  *
- * @author  David J. Barnes and Michael Kölling
- * @version 2016.02.29
- * @version 2023.10.10 DP classes 
+ * @author Los chavales
+ * @version 2023.11.02
  */
 public class PassengerTest
 {
